@@ -12,6 +12,7 @@ mkdir -p $FOLDER
 cp -rv \
   LICENSE \
   README.md \
+  thumbnail.png \
   typst.toml \
   img \
   src \
