@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PACKAGES_REPO="../typst-universe-packages"
+PACKAGES_REPO="../packages"
 
 set -e
 
