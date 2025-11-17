@@ -9,7 +9,7 @@ template = manifest['template']
 
 folder = Path(template["path"])
 templ_file = folder / template["entrypoint"]
-thumbnail = folder / template["thumbnail"]
+thumbnail = template["thumbnail"]
 
 src = Path('tests/example/test.typ').read_text()
 src = re.sub(r', *font: *"TeX Gyre Heros"', '', src)
