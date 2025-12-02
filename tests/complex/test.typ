@@ -15,7 +15,8 @@
   number-align: bottom + left,
   numbering: (i, t) => text(9pt)[Seite #i von #t Seiten],
   subject: [*Darlehensvertrag Nr. A3 4872 U27634 -- Wertermittlungkosten*],
-  hole-punch-mark: false,
+  hole-punch-marks: none,
+  folding-marks: (stroke: red, xdist: 1mm, length: 10mm),
   background: rotate(
     -40deg, text(120pt, red.transparentize(80%))[*DRAFT*]
   ),

@@ -52,12 +52,16 @@
 #let top-margin() = get-margin("top")
 #let left-margin() = get-margin("left", "inside")
 
-#let mark(y, len) = place(
-  top + left,
-  dx: 5mm,
-  dy: y,
-  line(length: len, stroke: 0.25pt)
-)
+#let marks-val(m, default) = if m == none { none } else { default + m }
+#let show-marks(m, ys) = context {
+  if m == none { return }
+  let p = m.pages
+  if p != "both" and ((p == "odd") != calc.odd(counter(page).get().first())) {
+    return
+  }
+  let l = line(length: m.length, stroke: m.stroke)
+  for y in ys { place(top + left, dx: m.xdist, dy: y, l) }
+}
 #let content-box(x, y, width, height, framed: false, content) = context place(
   top + left,
   dx: x - left-margin(),
@@ -72,26 +76,26 @@
   /// shown at the top of the information box.
   /// -> array of content
   sender: (),
-  /// Font size of the sender's name and address in the address box.
+  /// Font size of the sender's name and address in the address box
   /// -> length
   sender-font-size: 8pt,
-  /// Separator between sender's address parts in address box.
+  /// Separator between the sender's address parts in the address box
   /// -> content
   sender-separator: ", ",
   /// The recipient's name and address. Add line breaks manually.
   /// -> content
   recipient: [],
-  /// The recipient's top margin in the address box.
+  /// The recipient's top margin in the address box
   /// -> length
   recipient-top-margin: 12.7mm,
-  /// Absolute position and size of the address box: (x, y, width, height).
+  /// Absolute position and size of the address box: (x, y, width, height)
   /// -> array of length
   address-box: (25mm, 50mm, 80mm, 40mm),
   /// Content of the information box. If this is `auto`, the sender, location,
   /// and date are shown as a default.
   /// -> auto | content
   information: auto,
-  /// Absolute position and size of the information box: (x, y, width, height).
+  /// Absolute position and size of the information box: (x, y, width, height)
   /// -> array of length
   information-box: (125mm, 25mm, 75mm, 65mm),
   /// The date (only used, if `information` is `auto`). If this is
@@ -99,14 +103,17 @@
   /// is provided, the date will be formatted with `date-format`.
   /// -> auto | datetime | content
   date: auto,
-  /// The date format which is applied if `date` is `auto` or of type
+  /// The date format pattern which is applied if `date` is `auto` or of type
   /// `datetime`. If `date-format` is a string, it is directly passed to Typst's
-  /// `datetime.display()` function. If `date-format` is `auto` and `text.lang`
-  /// is `"de"`, the format `[day].[month].[year]` is used. If a different
-  /// language is set, `auto` is passed to `datetime.display()`.
+  /// `datetime.display()` function. If `date-format` is `auto`, the pattern
+  /// passed to `datetime.display()` is determined as follows:
+  /// * if `text.lang = "de"`: `"[day].[month].[year]"`
+  /// * if `text.lang = "en"`: `"[month repr:long] [day padding:none], [year]"`
+  /// * otherwise: `auto`
+  /// 
   /// -> auto | str
   date-format: auto,
-  /// The location (only used, if `information` is `auto`).
+  /// The location (only used, if `information` is `auto`)
   /// -> none | content
   location: none,
   /// The separator between location and date
@@ -115,15 +122,27 @@
   /// The subject
   /// -> none | content
   subject: none,
-  /// Whether folding marks are shown
-  /// -> bool
-  folding-marks: true,
-  /// Whether a hole punch mark is shown
-  /// -> bool
-  hole-punch-mark: true,
-  /// Content for the page background. The folding marks and the hole punch mark
-  /// are placed on the page's background. If you want to add additional content
-  /// to the background, provide it here.
+  /// Whether folding marks are shown and how. If `none`, no marks are shown.
+  /// Otherwise, a dictionary defines how the marks are shown. The dictionary
+  /// can have the following keys:
+  /// * pages -> str<br>On which pages the marks are shown: `"both"`,
+  /// `"even"`, or `"odd"`
+  /// * length -> length<br>The length of the marks
+  /// * stroke -> stroke<br>The stroke of the marks
+  /// * xdist -> length<br>The distance to the left edge of the page
+  /// 
+  /// All keys are optional. If provided, they overwrite their default value.<br>
+  /// The default is `(pages: "both", length: 5mm, stroke: 0.25pt, xdist: 5mm)`.
+  /// -> none | dictionary
+  folding-marks: (:),
+  /// Whether hole punch marks are shown and how. See `folding-marks` for
+  /// details.<br>
+  /// The default is `(pages: "both", length: 7mm, stroke: 0.25pt, xdist: 5mm)`.
+  /// -> none | dictionary
+  hole-punch-marks: (:),
+  /// Content for the page background. The folding marks and the hole punch
+  /// marks are placed on the page's background. If you want to add additional
+  /// content to the background, provide it here.
   /// -> content
   background: [],
   /// Whether address box and information box are framed. This is mainly for
@@ -131,17 +150,20 @@
   /// -> bool
   show-boxes: false,
   /// Additional arguments for Typst's `page()` function.<br>
-  /// Default arguments are:<br>
-  /// `margin: (left: 25mm, rest: 20mm)`<br>
-  /// `number-align: bottom + right`<br>
-  /// `numbering: (i, t) => text(10pt, context (localized().page-number)(i, t))`<br>
-  /// However, those values can be overwritten.
+  /// Default arguments (can be overwritten):
+  /// * `margin: (left: 25mm, rest: 20mm)`
+  /// * `number-align: bottom + right`
+  /// * `numbering: (i, t) => text(10pt, context (localized().page-number)(i, t))`
+  /// 
   /// -> any
   ..page-args,
   /// The letter content
   /// -> content
   body
 ) = {
+  let marks-default = (pages: "both", stroke: 0.25pt, xdist: 5mm)
+  folding-marks = marks-val(folding-marks, marks-default + (length: 5mm))
+  hole-punch-marks = marks-val(hole-punch-marks, marks-default + (length: 7mm))
   let default-page-args = arguments(
     margin: (left: 25mm, rest: 20mm),
     number-align: bottom + right,
@@ -150,11 +172,8 @@
   set page(
     ..(default-page-args + page-args),
     background: {
-      if folding-marks {
-        mark(105mm, 5mm)
-        mark(210mm, 5mm)
-      }
-      if hole-punch-mark { mark(148.5mm, 7mm) }
+      show-marks(folding-marks, (105mm, 210mm))
+      show-marks(hole-punch-marks, (148.5mm,))
       background
     },
   )

@@ -30,9 +30,7 @@ for m in re.finditer(r'\[(CODE|IMG):(.+):(.+\.typ)\]', base):
   base = base.replace(m.group(0), result + f'![{name}]({png})')
 
 def ldel(sub, string):
-  if string.startswith(sub):
-    return string.replace(sub, '', 1)
-  return string
+  return string.replace(sub, '', 1) if string.startswith(sub) else string
 
 valid_types = {
   'content',
@@ -45,7 +43,13 @@ valid_types = {
   'array of length',
   'datetime',
   'any',
+  'dictionary',
+  'stroke',
 }
+
+def marks_key_sub(m):
+  assert m[2] in valid_types
+  return f'* **`{m[1]}`** &emsp; `{m[2]}`<br>'
 
 lib = Path(manifest['entrypoint']).read_text()
 args_src = re.search(r'#let letter\((.+)\) = \{', lib, re.S)[1].strip()
@@ -54,7 +58,7 @@ types = None
 args = []
 args_doc = []
 for l in args_src.splitlines():
-  l = l.strip()
+  l = l.lstrip()
   if l.startswith('/// '):
     l = ldel('/// ', l)
     if l.startswith('-> '):
@@ -62,6 +66,7 @@ for l in args_src.splitlines():
       assert all(t in valid_types for t in types)
       types = ' | '.join(f'`{t}`' for t in types)
     else:
+      l = re.sub(r'\* (.+) -> (.+)<br>', marks_key_sub, l)
       desc.append(l)
   else:
     args.append(f'  {l}')
@@ -73,7 +78,7 @@ for l in args_src.splitlines():
       name, default = l, ''
     if default:
       default = f' &emsp; *Default*: `{default}`'
-    s = f'* **`{name}`** &emsp; {types}{variadic}{default}<br><br>{"\n".join(desc)}<br><br>'
+    s = f'**`{name}`** &emsp; {types}{variadic}{default}<br>{"\n".join(desc)}\n'
     args_doc.append(s)
     desc = []
     types = None
