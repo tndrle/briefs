@@ -50,7 +50,7 @@ For more examples check out the folder
 The image below shows the basic document structure. The address box contains
 sender and recipient.
 The information box contains additional information – the default is sender,
-location and date.
+location, and date.
 ![structure](img/structure.png)
 
 ### API
