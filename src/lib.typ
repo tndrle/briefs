@@ -81,6 +81,12 @@
   /// The recipient's name and address. Add line breaks manually.
   /// -> content
   recipient: [],
+  /// The recipient's top margin in the address box.
+  /// -> length
+  recipient-top-margin: 12.7mm,
+  /// Absolute position and size of the address box: (x, y, width, height).
+  /// -> array of length
+  address-box: (25mm, 50mm, 80mm, 40mm),
   /// Content of the information box. If this is `auto`, the sender, location,
   /// and date are shown as a default.
   /// -> auto | content
@@ -154,14 +160,13 @@
   )
 
   content-box(
-    25mm,
-    50mm,
-    80mm,
-    12.7mm,
-    framed: show-boxes,
+    ..address-box,
     text(sender-font-size, sender.join(sender-separator))
   )
-  content-box(25mm, 50mm + 12.7mm, 80mm, 27.3mm, framed: show-boxes, recipient)
+  content-box(..address-box, framed: show-boxes)[
+    #v(recipient-top-margin)
+    #recipient
+  ]
   content-box(
     ..information-box,
     framed: show-boxes,

@@ -60,6 +60,8 @@ letter(
   sender-font-size: 8pt,
   sender-separator: ", ",
   recipient: [],
+  recipient-top-margin: 12.7mm,
+  address-box: (25mm, 50mm, 80mm, 40mm),
   information: auto,
   information-box: (125mm, 25mm, 75mm, 65mm),
   date: auto,
@@ -84,6 +86,8 @@ shown at the top of the information box.<br><br>
 * **`sender-font-size`** &emsp; `length` &emsp; *Default*: `8pt`<br><br>Font size of the sender's name and address in the address box.<br><br>
 * **`sender-separator`** &emsp; `content` &emsp; *Default*: `", "`<br><br>Separator between sender's address parts in address box.<br><br>
 * **`recipient`** &emsp; `content` &emsp; *Default*: `[]`<br><br>The recipient's name and address. Add line breaks manually.<br><br>
+* **`recipient-top-margin`** &emsp; `length` &emsp; *Default*: `12.7mm`<br><br>The recipient's top margin in the address box.<br><br>
+* **`address-box`** &emsp; `array of length` &emsp; *Default*: `(25mm, 50mm, 80mm, 40mm)`<br><br>Absolute position and size of the address box: (x, y, width, height).<br><br>
 * **`information`** &emsp; `auto` | `content` &emsp; *Default*: `auto`<br><br>Content of the information box. If this is `auto`, the sender, location,
 and date are shown as a default.<br><br>
 * **`information-box`** &emsp; `array of length` &emsp; *Default*: `(125mm, 25mm, 75mm, 65mm)`<br><br>Absolute position and size of the information box: (x, y, width, height).<br><br>

@@ -7,6 +7,7 @@
   sender-font-size: 8.5pt,
   sender-separator: [ $dot.op$ ],
   recipient: [Musterbank\ Musterweg 13\ 54321 Musterhausen],
+  recipient-top-margin: 5mm,
   location: city,
   location-date-separator: " im ",
   date: "November 2025",
