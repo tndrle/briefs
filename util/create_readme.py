@@ -13,6 +13,7 @@ for m in re.finditer(r'\[(CODE|IMG):(.+):(.+\.typ)\]', base):
   # https://graphicdesign.stackexchange.com/a/117404
   os.system(
     rf'convert {png} \( +clone -background black -shadow 50x10+0+0 \) ' \
+    '-define png:exclude-chunks=date,time ' \
     f'+swap -background none -layers merge +repage {png}'
   )
 
