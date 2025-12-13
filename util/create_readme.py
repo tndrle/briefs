@@ -9,7 +9,7 @@ base = Path('util/README_base.md').read_text()
 for m in re.finditer(r'\[(CODE|IMG):(.+):(.+\.typ)\]', base):
   tag, name, path = m.groups()
   png = f'img/{name}.png'
-  os.system(f'typst compile --root . {path} {png}')
+  os.system(f'typst compile --ppi 100 --root . {path} {png}')
   # https://graphicdesign.stackexchange.com/a/117404
   os.system(
     rf'convert {png} \( +clone -background black -shadow 50x10+0+0 \) ' \
