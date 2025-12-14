@@ -1,4 +1,4 @@
-#import "@preview/briefs:0.1.0": letter
+#import "@preview/briefs:0.2.0": letter
 
 #set text(lang: "de")
 #show: letter.with(

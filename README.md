@@ -7,7 +7,7 @@ The address box fits the window of a
 
 ## Example
 ```typst
-#import "@preview/briefs:0.1.0": letter
+#import "@preview/briefs:0.2.0": letter
 
 #set text(lang: "de", font: "TeX Gyre Heros")
 #show: letter.with(
