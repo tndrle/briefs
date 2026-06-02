@@ -2,21 +2,22 @@
 
 Briefs is a simple [Typst](https://typst.app/) template for letters (German: Briefe).
 It is inspired by [DIN 5008](https://de.wikipedia.org/wiki/DIN_5008) and targets A4 paper.
-The address box fits the window of a
+The address box aligns with the window of a
 [DIN lang](https://de.wikipedia.org/wiki/DIN_lang) envelope.
 
 ## Example
 [CODE:example:tests/example/test.typ]
 
-For more examples check out the folder
-[`tests`](https://github.com/tndrle/briefs/tree/main/tests).
+Additional examples can be found in the
+[`tests`](https://github.com/tndrle/briefs/tree/main/tests) directory.
 
 ## Reference
 ### Document Structure
 The image below shows the basic document structure. The address box contains
 sender and recipient.
-The information box contains additional information. The default is the
-sender, any content in `information-extra`, the location, and the date.
+The information box contains supplementary information.
+By default, it displays the sender, content in `information-extra`,
+location, and date.
 [IMG:structure:tests/structure/test.typ]
 
 ### API

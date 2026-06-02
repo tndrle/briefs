@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2025 Tobias Enderle
+// Copyright (c) 2026 Tobias Enderle
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -70,47 +70,49 @@
 )
 
 #let letter(
-  /// Sender's name and address. This address is shown in the address box with
-  /// font size `sender-font-size` and concatenated with separator
+  /// The sender's address. This address is shown in the address box
+  /// with font size `sender-font-size` and concatenated with separator
   /// `sender-separator`. If `information` is `auto`, this address is also
   /// shown at the top of the information box.
   /// -> array of content
   sender: (),
-  /// Font size of the sender's name and address in the address box
+  /// The font size for the sender's address in the address box
   /// -> length
   sender-font-size: 8pt,
-  /// Separator between the sender's address parts in the address box
+  /// The separator between the sender's address parts in the address box
   /// -> content
-  sender-separator: ", ",
-  /// The recipient's name and address. Add line breaks manually.
+  sender-separator: [, ],
+  /// The recipient's address. Line breaks must be inserted manually.
   /// -> content
   recipient: [],
   /// The recipient's top margin in the address box
   /// -> length
   recipient-top-margin: 12.7mm,
-  /// Absolute position and size of the address box: (x, y, width, height)
+  /// Absolute position and size of the address box in the form
+  /// `(x, y, width, height)`.
   /// -> array of length
   address-box: (25mm, 50mm, 80mm, 40mm),
-  /// Content of the information box. If this is `auto`, the sender, optional
-  /// content in `information-extra`, the location, and the date are shown
-  /// as a default.
+  /// The content of the information box. If this is `auto`, the sender,
+  /// optional content in `information-extra`, the location, and the date
+  /// are shown as a default.
   /// -> auto | content
   information: auto,
-  /// Absolute position and size of the information box: (x, y, width, height)
+  /// Absolute position and size of the information box in the form
+  /// `(x, y, width, height)`.
   /// -> array of length
   information-box: (125mm, 25mm, 75mm, 65mm),
-  /// Additional content for the information box (only used, if `information`
+  /// Additional content for the information box (only used if `information`
   /// is `auto`). This content is displayed after the sender and can be used,
   /// for example, to show a phone number or email address.
   /// -> none | content
   information-extra: none,
-  /// The date (only used, if `information` is `auto`). If this is
+  /// The date (only used if `information` is `auto`). If this is
   /// `auto`, the current date is shown. If `auto` or a value of type `datetime`
   /// is provided, the date will be formatted with `date-format`.
-  /// -> auto | datetime | content
+  /// -> none | auto | datetime | content
   date: auto,
   /// The date format pattern which is applied if `date` is `auto` or of type
-  /// `datetime`. If `date-format` is a string, it is directly passed to Typst's
+  /// `datetime`. If `date-format` is a string, it is passed directly to Typst's
   /// `datetime.display()` function. If `date-format` is `auto`, the pattern
   /// passed to `datetime.display()` is determined as follows:
   /// * if `text.lang = "de"`: `"[day].[month].[year]"`
@@ -119,16 +121,17 @@
   /// 
   /// -> auto | str
   date-format: auto,
-  /// The location (only used, if `information` is `auto`)
+  /// The location (only used if `information` is `auto`)
   /// -> none | content
   location: none,
   /// The separator between location and date
   /// -> content
-  location-date-separator: ", ",
+  location-date-separator: [, ],
   /// The subject
   /// -> none | content
   subject: none,
-  /// Whether folding marks are shown and how. If `none`, no marks are shown.
+  /// Whether folding marks are displayed and how they are rendered.
+  /// If `none`, no marks are shown.
   /// Otherwise, a dictionary defines how the marks are shown. The dictionary
   /// can have the following keys:
   /// * pages -> str<br>On which pages the marks are shown: `"both"`,
@@ -141,8 +144,8 @@
   /// The default is `(pages: "both", length: 5mm, stroke: 0.25pt, xdist: 5mm)`.
   /// -> none | dictionary
   folding-marks: (:),
-  /// Whether hole punch marks are shown and how. See `folding-marks` for
-  /// details.<br>
+  /// Whether hole punch marks are displayed and how they are rendered.
+  /// See `folding-marks` for details.<br>
   /// The default is `(pages: "both", length: 7mm, stroke: 0.25pt, xdist: 5mm)`.
   /// -> none | dictionary
   hole-punch-marks: (:),
@@ -151,8 +154,8 @@
   /// content to the background, provide it here.
   /// -> content
   background: [],
-  /// Whether address box and information box are framed. This is mainly for
-  /// debugging.
+  /// Whether address box and information box are framed.
+  /// This is primarily intended for layout debugging.
   /// -> bool
   show-boxes: false,
   /// Additional arguments for Typst's `page()` function.<br>
