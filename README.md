@@ -49,8 +49,8 @@ For more examples check out the folder
 ### Document Structure
 The image below shows the basic document structure. The address box contains
 sender and recipient.
-The information box contains additional information – the default is sender,
-location, and date.
+The information box contains additional information. The default is the
+sender, any content in `information-extra`, the location, and the date.
 ![structure](img/structure.png)
 
 ### API
@@ -64,6 +64,7 @@ letter(
   address-box: (25mm, 50mm, 80mm, 40mm),
   information: auto,
   information-box: (125mm, 25mm, 75mm, 65mm),
+  information-extra: none,
   date: auto,
   date-format: auto,
   location: none,
@@ -95,10 +96,15 @@ shown at the top of the information box.
 
 **`address-box`** &emsp; `array of length` &emsp; *Default*: `(25mm, 50mm, 80mm, 40mm)`<br>Absolute position and size of the address box: (x, y, width, height)
 
-**`information`** &emsp; `auto` | `content` &emsp; *Default*: `auto`<br>Content of the information box. If this is `auto`, the sender, location,
-and date are shown as a default.
+**`information`** &emsp; `auto` | `content` &emsp; *Default*: `auto`<br>Content of the information box. If this is `auto`, the sender, optional
+content in `information-extra`, the location, and the date are shown
+as a default.
 
 **`information-box`** &emsp; `array of length` &emsp; *Default*: `(125mm, 25mm, 75mm, 65mm)`<br>Absolute position and size of the information box: (x, y, width, height)
+
+**`information-extra`** &emsp; `none` | `content` &emsp; *Default*: `none`<br>Additional content for the information box (only used, if `information`
+is `auto`). This content is displayed after the sender and can be used,
+for example, to show a phone number or email address.
 
 **`date`** &emsp; `auto` | `datetime` | `content` &emsp; *Default*: `auto`<br>The date (only used, if `information` is `auto`). If this is
 `auto`, the current date is shown. If `auto` or a value of type `datetime`

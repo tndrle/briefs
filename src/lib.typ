@@ -91,13 +91,19 @@
   /// Absolute position and size of the address box: (x, y, width, height)
   /// -> array of length
   address-box: (25mm, 50mm, 80mm, 40mm),
-  /// Content of the information box. If this is `auto`, the sender, location,
-  /// and date are shown as a default.
+  /// Content of the information box. If this is `auto`, the sender, optional
+  /// content in `information-extra`, the location, and the date are shown
+  /// as a default.
   /// -> auto | content
   information: auto,
   /// Absolute position and size of the information box: (x, y, width, height)
   /// -> array of length
   information-box: (125mm, 25mm, 75mm, 65mm),
+  /// Additional content for the information box (only used, if `information`
+  /// is `auto`). This content is displayed after the sender and can be used,
+  /// for example, to show a phone number or email address.
+  /// -> none | content
+  information-extra: none,
   /// The date (only used, if `information` is `auto`). If this is
   /// `auto`, the current date is shown. If `auto` or a value of type `datetime`
   /// is provided, the date will be formatted with `date-format`.
@@ -198,7 +204,8 @@
           } else { date-format }
         )
       }
-      sender.join("\n")
+      sender.join[\ ]
+      if information-extra != none [\ #information-extra]
       v(1fr)
       (location, date).filter(x => x != none).join(location-date-separator)
     } else { information }

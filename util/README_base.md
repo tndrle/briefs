@@ -15,8 +15,8 @@ For more examples check out the folder
 ### Document Structure
 The image below shows the basic document structure. The address box contains
 sender and recipient.
-The information box contains additional information – the default is sender,
-location, and date.
+The information box contains additional information. The default is the
+sender, any content in `information-extra`, the location, and the date.
 [IMG:structure:tests/structure/test.typ]
 
 ### API
