@@ -6,8 +6,10 @@ import tomllib
 manifest = tomllib.loads(Path('typst.toml').read_text())['package']
 base = Path('util/README_base.md').read_text()
 
-for m in re.finditer(r'\[(CODE|IMG):(.+):(.+\.typ)\]', base):
-  tag, name, path = m.groups()
+base = base.replace('[VERSION]', manifest["version"])
+
+for m in re.finditer(r'\[(CODE|IMG):(.+?):(.+?):(.+\.typ)\]', base):
+  tag, name, alt, path = m.groups()
   png = f'img/{name}.png'
   os.system(f'typst compile --ppi 100 --root . {path} {png}')
   # https://graphicdesign.stackexchange.com/a/117404
@@ -27,7 +29,7 @@ for m in re.finditer(r'\[(CODE|IMG):(.+):(.+\.typ)\]', base):
     )
     result = f'```typst\n{src.strip()}\n```\n\n'
 
-  base = base.replace(m.group(0), result + f'![{name}]({png})')
+  base = base.replace(m[0], result + f'![{alt}]({png})')
 
 def ldel(sub, string):
   return string.replace(sub, '', 1) if string.startswith(sub) else string

@@ -7,7 +7,7 @@ The address box aligns with the window of a
 
 ## Example
 ```typst
-#import "@preview/briefs:0.2.0": letter
+#import "@preview/briefs:0.3.0": letter
 
 #set text(lang: "de", font: "TeX Gyre Heros")
 #show: letter.with(
@@ -40,10 +40,10 @@ Mit freundlichen Grüßen
 Hilfsorganisation e.V.
 ```
 
-![example](img/example.png)
+![An example letter generated with briefs](img/example.png)
 
 Additional examples can be found in the
-[`tests`](https://github.com/tndrle/briefs/tree/main/tests) directory.
+[`tests`](https://github.com/tndrle/briefs/tree/v0.3.0/tests) directory.
 
 ## Reference
 ### Document Structure
@@ -52,7 +52,7 @@ sender and recipient.
 The information box contains supplementary information.
 By default, it displays the sender, content in `information-extra`,
 location, and date.
-![structure](img/structure.png)
+![The basic document structure of letter generated with briefs](img/structure.png)
 
 ### API
 ```typst

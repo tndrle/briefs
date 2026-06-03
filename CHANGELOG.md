@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.0 - 2026-06-03
+## 0.3.0 - 2026-06-08
 ### Added
 - New argument `information-extra`: Additional content for the information box (only used if `information` is `auto`). This content is displayed after the sender and can be used, for example, to show a phone number or email address. ([27f286c](https://github.com/tndrle/briefs/commit/27f286c16fb3371185febc11752e525ad55369ec))
 

@@ -6,10 +6,10 @@ The address box aligns with the window of a
 [DIN lang](https://de.wikipedia.org/wiki/DIN_lang) envelope.
 
 ## Example
-[CODE:example:tests/example/test.typ]
+[CODE:example:An example letter generated with briefs:tests/example/test.typ]
 
 Additional examples can be found in the
-[`tests`](https://github.com/tndrle/briefs/tree/main/tests) directory.
+[`tests`](https://github.com/tndrle/briefs/tree/v[VERSION]/tests) directory.
 
 ## Reference
 ### Document Structure
@@ -18,7 +18,7 @@ sender and recipient.
 The information box contains supplementary information.
 By default, it displays the sender, content in `information-extra`,
 location, and date.
-[IMG:structure:tests/structure/test.typ]
+[IMG:structure:The basic document structure of letter generated with briefs:tests/structure/test.typ]
 
 ### API
 ```typst
