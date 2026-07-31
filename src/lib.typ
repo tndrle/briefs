@@ -52,7 +52,15 @@
 #let top-margin() = get-margin("top")
 #let left-margin() = get-margin("left", "inside")
 
-#let marks-val(m, default) = if m == none { none } else { default + m }
+#let check-option(value, options) = assert(
+  value in options, message: "Invalid option \"" + value + "\""
+)
+
+#let marks-val(m, default) = {
+  let result = if m == none { none } else { default + m }
+  if result != none { check-option(result.pages, ("both", "even", "odd")) }
+  return result
+}
 #let show-marks(m, ys) = context {
   if m == none { return }
   let p = m.pages
@@ -158,12 +166,27 @@
   /// This is primarily intended for layout debugging.
   /// -> bool
   show-boxes: false,
+  /// Whether a page number is displayed on the first page:
+  /// * `"always"`: Always, even for single-page letters
+  /// * `"multiple"`: If the letter has multiple pages
+  /// * `"never"`: Never, even for multi-page letters
+  /// 
+  /// This argument is used in the default numbering
+  /// (see `numbering` in `page-args` below). If you overwrite
+  /// `numbering`, `numbering-first-page` has no effect.
+  /// -> str
+  numbering-first-page: "always",
   /// Additional arguments for Typst's `page()` function.<br>
   /// Default arguments (can be overwritten):
-  /// * `margin: (left: 25mm, rest: 20mm)`
-  /// * `number-align: bottom + right`
-  /// * `numbering: (i, t) => text(10pt, context (localized().page-number)(i, t))`
-  /// 
+  /// ```
+  /// margin: (left: 25mm, rest: 20mm),
+  /// number-align: bottom + right,
+  /// numbering: (i, t) => if (numbering-first-page == "always") or
+  ///   (numbering-first-page == "multiple" and t > 1) or
+  ///   (numbering-first-page == "never" and i > 1) {
+  ///     text(10pt, context (localized().page-number)(i, t))
+  ///   },
+  /// ```
   /// -> any
   ..page-args,
   /// The letter content
@@ -173,10 +196,15 @@
   let marks-default = (pages: "both", stroke: 0.25pt, xdist: 5mm)
   folding-marks = marks-val(folding-marks, marks-default + (length: 5mm))
   hole-punch-marks = marks-val(hole-punch-marks, marks-default + (length: 7mm))
+  check-option(numbering-first-page, ("always", "multiple", "never"))
   let default-page-args = arguments(
     margin: (left: 25mm, rest: 20mm),
     number-align: bottom + right,
-    numbering: (i, t) => text(10pt, context (localized().page-number)(i, t))
+    numbering: (i, t) => if (numbering-first-page == "always") or
+      (numbering-first-page == "multiple" and t > 1) or
+      (numbering-first-page == "never" and i > 1) {
+        text(10pt, context (localized().page-number)(i, t))
+      }
   )
   set page(
     ..(default-page-args + page-args),

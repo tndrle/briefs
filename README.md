@@ -79,6 +79,7 @@ letter(
   hole-punch-marks: (:),
   background: [],
   show-boxes: false,
+  numbering-first-page: "always",
   ..page-args,
   body
 )
@@ -156,12 +157,26 @@ content to the background, provide it here.
 **`show-boxes`** &emsp; `bool` &emsp; *Default*: `false`<br>Whether address box and information box are framed.
 This is primarily intended for layout debugging.
 
+**`numbering-first-page`** &emsp; `str` &emsp; *Default*: `"always"`<br>Whether a page number is displayed on the first page:
+* `"always"`: Always, even for single-page letters
+* `"multiple"`: If the letter has multiple pages
+* `"never"`: Never, even for multi-page letters
+
+This argument is used in the default numbering
+(see `numbering` in `page-args` below). If you overwrite
+`numbering`, `numbering-first-page` has no effect.
+
 **`page-args`** &emsp; `any` (*variadic*)<br>Additional arguments for Typst's `page()` function.<br>
 Default arguments (can be overwritten):
-* `margin: (left: 25mm, rest: 20mm)`
-* `number-align: bottom + right`
-* `numbering: (i, t) => text(10pt, context (localized().page-number)(i, t))`
-
+```
+margin: (left: 25mm, rest: 20mm),
+number-align: bottom + right,
+numbering: (i, t) => if (numbering-first-page == "always") or
+  (numbering-first-page == "multiple" and t > 1) or
+  (numbering-first-page == "never" and i > 1) {
+    text(10pt, context (localized().page-number)(i, t))
+  },
+```
 
 **`body`** &emsp; `content`<br>The letter content
 
