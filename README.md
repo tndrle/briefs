@@ -22,6 +22,10 @@ The address box aligns with the window of a
     Rathausplatz 37\
     67890 Waldhausen
   ],
+  information-extra: [
+    \
+    Tel.: 01234 5678910
+  ],
   location: "Helfershausen",
   subject: [*Vielen Dank für Ihre Spende*]
 )
