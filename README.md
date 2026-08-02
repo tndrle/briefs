@@ -7,7 +7,7 @@ The address box aligns with the window of a
 
 ## Example
 ```typst
-#import "@preview/briefs:0.3.0": letter
+#import "@preview/briefs:0.4.0": letter
 
 #set text(lang: "de", font: "TeX Gyre Heros")
 #show: letter.with(
@@ -47,7 +47,7 @@ Hilfsorganisation e.V.
 ![An example letter generated with briefs](img/example.png)
 
 Additional examples can be found in the
-[`tests`](https://github.com/tndrle/briefs/tree/v0.3.0/tests) directory.
+[`tests`](https://github.com/tndrle/briefs/tree/v0.4.0/tests) directory.
 
 ## Reference
 ### Document Structure

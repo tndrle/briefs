@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.0 - 2026-08-07
+### Added
+- New argument `numbering-first-page`: Whether a page number is displayed on the first page. ([c85b659](https://github.com/tndrle/briefs/commit/c85b659fbc0094ab3059c4a0ce96be59e28d67da))
+
 ## 0.3.0 - 2026-06-08
 ### Added
 - New argument `information-extra`: Additional content for the information box (only used if `information` is `auto`). This content is displayed after the sender and can be used, for example, to show a phone number or email address. ([27f286c](https://github.com/tndrle/briefs/commit/27f286c16fb3371185febc11752e525ad55369ec))
