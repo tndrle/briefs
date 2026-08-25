@@ -179,6 +179,7 @@
   /// Additional arguments for Typst's `page()` function.<br>
   /// Default arguments (can be overwritten):
   /// ```
+  /// paper: "a4",
   /// margin: (left: 25mm, rest: 20mm),
   /// number-align: bottom + right,
   /// numbering: (i, t) => if (numbering-first-page == "always") or
@@ -198,6 +199,7 @@
   hole-punch-marks = marks-val(hole-punch-marks, marks-default + (length: 7mm))
   check-option(numbering-first-page, ("always", "multiple", "never"))
   let default-page-args = arguments(
+    paper: "a4",
     margin: (left: 25mm, rest: 20mm),
     number-align: bottom + right,
     numbering: (i, t) => if (numbering-first-page == "always") or
