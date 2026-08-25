@@ -169,6 +169,7 @@ This argument is used in the default numbering
 **`page-args`** &emsp; `any` (*variadic*)<br>Additional arguments for Typst's `page()` function.<br>
 Default arguments (can be overwritten):
 ```
+paper: "a4",
 margin: (left: 25mm, rest: 20mm),
 number-align: bottom + right,
 numbering: (i, t) => if (numbering-first-page == "always") or
